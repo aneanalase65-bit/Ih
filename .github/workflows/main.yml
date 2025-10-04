@@ -1,4 +1,4 @@
-name: ANEA
+name: AN
 
 on:
   workflow_dispatch:
@@ -6,7 +6,7 @@ on:
 jobs:
   rdp:
     runs-on: windows-latest
-    timeout-minutes: 360
+    timeout-minutes: 350
 
     steps:
       - name: 》Menyiapkan Konfigurasi Core RDP ...
@@ -26,29 +26,19 @@ jobs:
             dir=in action=allow protocol=TCP localport=3389
           # (Optional) Restart the Remote Desktop service to ensure changes take effect
           Restart-Service -Name TermService -Force
-      - name: 》 Menyiapkan ID & Pass ...
+      - name: 》 Siapkan User & Password ....
         run: |
-          Add-Type -AssemblyName System.Security
-          $charSet = @{
-              Upper   = [char[]](65)  # A
-              Lower   = [char[]](97)  # a
-              Number  = [char[]](50)  # 2
-              Special = @('@')        # @
-          }
-          $rawPassword = @()
-          $rawPassword += $charSet.Upper | Get-Random -Count 4
-          $rawPassword += $charSet.Lower | Get-Random -Count 4
-          $rawPassword += $charSet.Number | Get-Random -Count 4
-          $rawPassword += $charSet.Special | Get-Random -Count 4
-          $password = -join ($rawPassword | Sort-Object { Get-Random })
+          $password = "a2@"
           $securePass = ConvertTo-SecureString $password -AsPlainText -Force
-          New-LocalUser -Name "2anea" -Password $securePass -AccountNeverExpires
-          Add-LocalGroupMember -Group "Administrators" -Member "2anea"
-          Add-LocalGroupMember -Group "Remote Desktop Users" -Member "2anea"
+          if (-not (Get-LocalUser -Name "an1" -ErrorAction SilentlyContinue)) {
+              New-LocalUser -Name "an1" -Password $securePass -AccountNeverExpires
+          }
+          Add-LocalGroupMember -Group "Administrators" -Member "an1" -ErrorAction SilentlyContinue
+          Add-LocalGroupMember -Group "Remote Desktop Users" -Member "an1" -ErrorAction SilentlyContinue
           
-          echo "RDP_CREDS=USER: 2anea | PASS: $Password" >> $env:GITHUB_ENV
+          echo "RDP_CREDS=User: an1 | Pass: $Password" >> $env:GITHUB_ENV
           
-          if (-not (Get-LocalUser -Name "2anea")) {
+          if (-not (Get-LocalUser -Name "an1")) {
               Write-Error "User creation failed"
               exit 1
           }
@@ -62,7 +52,7 @@ jobs:
           Remove-Item $installerPath -Force
       - name: 》 Establish Koneksi Tailscale ...
         run: |
-          # Siapkan AuthKey & HostName Unik ...
+          # Siapkan AuthKey IP Address ...
           & "$env:ProgramFiles\Tailscale\tailscale.exe" up --authkey=${{ secrets.TAILSCALE_AUTH_KEY }} --hostname=gh-runner-$env:GITHUB_RUN_ID
           
           # Wait for Tailscale to assign an IP
@@ -82,7 +72,7 @@ jobs:
       
       - name: 》 Koneksi Maintain ...
         run: |
-          Write-Host "Tunggu ..."
+          Write-Host "..."
           Write-Host "IP Address: $env:TAILSCALE_IP"
           Write-Host "Login:"
           Write-Host "$(echo $env:RDP_CREDS)"
@@ -90,6 +80,6 @@ jobs:
           
           # Keep runner active indefinitely (or until manually cancelled)
           while ($true) {
-              Write-Host "[$(Get-Date)] RDP Dimulai.. Ctrl+C Cancel Workflow"
+              Write-Host "[$(Get-Date)] Berjalan.. Ctrl+C Cancel Workflow"
               Start-Sleep -Seconds 9000
           }

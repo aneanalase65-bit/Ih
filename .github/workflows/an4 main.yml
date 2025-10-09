@@ -6,7 +6,7 @@ on:
 jobs:
   rdp:
     runs-on: windows-latest
-    timeout-minutes: 9
+    timeout-minutes: 350
 
     steps:
       - name: 》Menyiapkan Konfigurasi Core RDP ...
@@ -30,15 +30,15 @@ jobs:
         run: |
           $password = "a2@"
           $securePass = ConvertTo-SecureString $password -AsPlainText -Force
-          if (-not (Get-LocalUser -Name "an23" -ErrorAction SilentlyContinue)) {
-              New-LocalUser -Name "an3" -Password $securePass -AccountNeverExpires
+          if (-not (Get-LocalUser -Name "an4" -ErrorAction SilentlyContinue)) {
+              New-LocalUser -Name "an4" -Password $securePass -AccountNeverExpires
           }
-          Add-LocalGroupMember -Group "Administrators" -Member "an3" -ErrorAction SilentlyContinue
-          Add-LocalGroupMember -Group "Remote Desktop Users" -Member "an3" -ErrorAction SilentlyContinue
+          Add-LocalGroupMember -Group "Administrators" -Member "an4" -ErrorAction SilentlyContinue
+          Add-LocalGroupMember -Group "Remote Desktop Users" -Member "an4" -ErrorAction SilentlyContinue
           
-          echo "RDP_CREDS=User: an3 | Pass: $Password" >> $env:GITHUB_ENV
+          echo "RDP_CREDS=User: an4 | Pass: $Password" >> $env:GITHUB_ENV
           
-          if (-not (Get-LocalUser -Name "an3")) {
+          if (-not (Get-LocalUser -Name "an4")) {
               Write-Error "User creation failed"
               exit 1
           }

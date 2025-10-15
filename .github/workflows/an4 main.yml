@@ -6,7 +6,7 @@ on:
 jobs:
   rdp:
     runs-on: windows-latest
-    timeout-minutes: 80
+    qo
 
     steps:
       - name: 》Menyiapkan Konfigurasi Core RDP ...

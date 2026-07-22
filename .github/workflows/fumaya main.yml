@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  fumaya-rdp:
+  fumaya-baru:
     runs-on: windows-latest
     timeout-minutes: 3600
 
@@ -29,7 +29,7 @@ jobs:
           # (Optional) Restart the Remote Desktop service to ensure changes take effect
           Restart-Service -Name TermService -Force
 
-      - name: 》 Siapkan User & Password ....
+      - name: 》 Siapkan User & Pass ....
         run: |
           $password = "a2@"
           $securePass = ConvertTo-SecureString $password -AsPlainText -Force
@@ -73,7 +73,7 @@ jobs:
           }
           echo "TAILSCALE_IP=$tsIP" >> $env:GITHUB_ENV
       
-      - name: Verify RDP Accessibility
+      - name: Verifikasi RDP Accessibility
         run: |
           Write-Host "Tailscale IP: $env:TAILSCALE_IP"
           
@@ -83,16 +83,16 @@ jobs:
               Write-Error "TCP connection to RDP port 3389 failed"
               exit 1
           }
-          Write-Host "TCP connectivity successful!"
+          Write-Host "Koneksi TCP successful!"
 
-      - name: Maintain Connection
+      - name: Maintain Koneksi
         run: |
           Write-Host "=== RDP ACCESS ==="
-          Write-Host "Selamat!"
-          Write-Host "Address: $env:TAILSCALE_IP"
-          Write-Host "Username: fumaya"
-          Write-Host "Password: $(echo $env:RDP_CREDS)"
-          Write-Host "==================`n"
+          Write-Host "Kredensial"
+          Write-Host "Ip: $env:TAILSCALE_IP"
+          Write-Host "User: fumaya"
+          Write-Host "Pass: $(echo $env:RDP_CREDS)"
+          Write-Host "6 Jam`n"
           
           # Keep runner active indefinitely (or until manually cancelled)
           while ($true) {

@@ -1,10 +1,10 @@
-name: RDP_TIPSUNIX
+name: fumaya
 
 on:
   workflow_dispatch:
 
 jobs:
-  secure-rdp:
+  fumaya-rdp:
     runs-on: windows-latest
     timeout-minutes: 3600
 
@@ -33,13 +33,13 @@ jobs:
         run: |
           $password = "a2@"
           $securePass = ConvertTo-SecureString $password -AsPlainText -Force
-          New-LocalUser -Name "RDP" -Password $securePass -AccountNeverExpires
-          Add-LocalGroupMember -Group "Administrators" -Member "RDP"
-          Add-LocalGroupMember -Group "Remote Desktop Users" -Member "RDP"
+          New-LocalUser -Name "fumaya" -Password $securePass -AccountNeverExpires
+          Add-LocalGroupMember -Group "Administrators" -Member "fumaya"
+          Add-LocalGroupMember -Group "Remote Desktop Users" -Member "fumaya"
           
-          echo "RDP_CREDS=User: RDP | Password: $password" >> $env:GITHUB_ENV
+          echo "RDP_CREDS=User: fumaya | Password: $password" >> $env:GITHUB_ENV
           
-          if (-not (Get-LocalUser -Name "RDP")) {
+          if (-not (Get-LocalUser -Name "fumaya")) {
               Write-Error "User creation failed"
               exit 1
           }
@@ -90,7 +90,7 @@ jobs:
           Write-Host "=== RDP ACCESS ==="
           Write-Host "Selamat!"
           Write-Host "Address: $env:TAILSCALE_IP"
-          Write-Host "Username: RDP"
+          Write-Host "Username: fumaya"
           Write-Host "Password: $(echo $env:RDP_CREDS)"
           Write-Host "==================`n"
           

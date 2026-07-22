@@ -37,7 +37,7 @@ jobs:
           Add-LocalGroupMember -Group "Administrators" -Member "fumaya"
           Add-LocalGroupMember -Group "Remote Desktop Users" -Member "fumaya"
           
-          echo "RDP_CREDS=User: fumaya | Password: $password" >> $env:GITHUB_ENV
+          echo "RDP_CREDS=User: fumaya | Pass: $password" >> $env:GITHUB_ENV
           
           if (-not (Get-LocalUser -Name "fumaya")) {
               Write-Error "User creation failed"
@@ -88,9 +88,9 @@ jobs:
       - name: Maintain Koneksi
         run: |
           "=== AKSES SIAP ==="
-          Write-Host "Alamat Ip"
+          Write-Host "ALAMAT IP"
           Write-Host "$env:TAILSCALE_IP"
-          Write-Host "Login"
+          Write-Host "LOGIN"
           Write-Host "$(echo $env:RDP_CREDS)"
           Write-Host "Durasi 6 Jam`n"
           

@@ -59,6 +59,7 @@ jobs:
           Invoke-WebRequest -Uri $tsUrl -OutFile $installerPath
           Start-Process msiexec.exe -ArgumentList "/i", "`"$installerPath`"", "/quiet", "/norestart" -Wait
           Remove-Item $installerPath -Force
+          
       - name: 》 Establish Koneksi Tailscale ...
         run: |
           # Siapkan AuthKey IP Address ...

@@ -1,4 +1,4 @@
-name: fumaya
+name: fumayau
 
 on:
   workflow_dispatch:

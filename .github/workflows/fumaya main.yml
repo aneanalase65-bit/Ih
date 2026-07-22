@@ -87,12 +87,12 @@ jobs:
 
       - name: Maintain Koneksi
         run: |
-          Write-Host "=== RDP ACCESS ==="
+          Write-Host "=== AKSES SIAP ==="
           Write-Host "Kredensial"
           Write-Host "Ip: $env:TAILSCALE_IP"
-          Write-Host "Billing:"
-          Write-Host "Pass: $(echo $env:RDP_CREDS)"
-          Write-Host "6 Jam`n"
+          Write-Host "==="
+          Write-Host "Id: $(echo $env:RDP_CREDS)"
+          Write-Host "Durasi 6 Jam`n"
           
           # Keep runner active indefinitely (or until manually cancelled)
           while ($true) {

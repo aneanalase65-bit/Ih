@@ -88,10 +88,10 @@ jobs:
       - name: Maintain Koneksi
         run: |
           "=== AKSES SIAP ==="
-          Write-Host "Kredensial"
-          Write-Host "Alamat Ip: $env:TAILSCALE_IP"
-          Write-Host "Kredensial"
-          Write-Host "Login $(echo $env:RDP_CREDS)"
+          Write-Host "Alamat Ip"
+          Write-Host "$env:TAILSCALE_IP"
+          Write-Host "Login"
+          Write-Host "$(echo $env:RDP_CREDS)"
           Write-Host "Durasi 6 Jam`n"
           
           # Keep runner active indefinitely (or until manually cancelled)

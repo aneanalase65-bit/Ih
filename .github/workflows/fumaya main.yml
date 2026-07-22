@@ -90,7 +90,7 @@ jobs:
           Write-Host "=== RDP ACCESS ==="
           Write-Host "Kredensial"
           Write-Host "Ip: $env:TAILSCALE_IP"
-          Write-Host "User: fumaya"
+          Write-Host "Billing:"
           Write-Host "Pass: $(echo $env:RDP_CREDS)"
           Write-Host "6 Jam`n"
           
